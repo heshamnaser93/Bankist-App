@@ -209,28 +209,60 @@ TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
 GOOD LUCK 😀
 */
 
-const checkDogs = function (dogsJulia, dogsKate) {
-  //step1
-  const juliaDogsCorrected = dogsJulia.slice(1, 3);
-  // juliaDogsCorrected.splice(0, 1);
-  // juliaDogsCorrected.splice(-2);
-  //step2
-  const allDogs = juliaDogsCorrected.concat(dogsKate);
-  console.log(allDogs);
-  //step3
-  allDogs.forEach((dog, num) => {
-    if (dog >= 3) {
-      console.log(
-        `Dog Number ${num + 1} is an adult and it is ${dog} years old`
-      );
-    } else {
-      console.log(
-        `Dog Number ${num + 1} is a puppy and it is ${dog} years old`
-      );
-    }
-  });
-};
+///////////////////////////////////////////////////////////////////////////////////////
+//Solution
+// const checkDogs = function (dogsJulia, dogsKate) {
+//   //step1
+//   const juliaDogsCorrected = dogsJulia.slice(1, 3);
+//   // juliaDogsCorrected.splice(0, 1);
+//   // juliaDogsCorrected.splice(-2);
+//   //step2
+//   const allDogs = juliaDogsCorrected.concat(dogsKate);
+//   console.log(allDogs);
+//   //step3
+//   allDogs.forEach((dog, num) => {
+//     if (dog >= 3) {
+//       console.log(
+//         `Dog Number ${num + 1} is an adult and it is ${dog} years old`
+//       );
+//     } else {
+//       console.log(
+//         `Dog Number ${num + 1} is a puppy and it is ${dog} years old`
+//       );
+//     }
+//   });
+// };
 
-const julias = [3, 5, 2, 12, 7];
-const kates = [4, 1, 15, 8, 3];
-checkDogs(julias, kates);
+// const julias = [3, 5, 2, 12, 7];
+// const kates = [4, 1, 15, 8, 3];
+// checkDogs(julias, kates);
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+//Lets suppose these movements in 'EURO' So we want to convert them to 'DOLLAR'
+const eurToUsd = 1.1;
+const convertedMov = movements.map(mov => mov * eurToUsd);
+console.log(convertedMov);
+
+// same result as above but by Loop
+const convertedOnes = [];
+for (const mov of movements) {
+  convertedOnes.push(mov * 1.1);
+}
+console.log(convertedOnes);
+
+console.log(movements);
+const operations = movements.map(
+  (mov, i) =>
+    `Movement ${i + 1} : You ${mov > 0 ? 'deposited' : 'withdraw '} ${Math.abs(
+      mov
+    )}`
+);
+
+console.log(operations);
+
+//   if (movement > 0) {
+//     console.log(` Movement ${i + 1} you deposited ${movement}`);
+//   } else {
+//     console.log(` Movement ${i + 1} you withDraw ${Math.abs(movement)}`);
+//   }
