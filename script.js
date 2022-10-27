@@ -167,8 +167,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // });
 ////////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////////
-//Start Working ON The App
+//////Bankist App/////////////////////////////////////////////////////////////////////////////////
 
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
@@ -196,6 +195,29 @@ const calcDisplayMovements = function (movements) {
 };
 
 calcDisplayMovements(account1.movements);
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+const calcDisplaySummary = movements => {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, curr) => acc + curr, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const outcomes = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, curr) => acc + curr, 0);
+  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(dep => (dep * 1.2) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, inc) => acc + inc, 0);
+
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySummary(account1.movements);
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -376,9 +398,30 @@ GOOD LUCK 😀
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-//Chaining Methods
-const movements = account1.movements;
-movements
-  .filter(mov => mov > 0)
-  .map(dep => dep * 1.01)
-  .reduce(acc, curr => acc + curr, 0);
+// Coding Challenge #3
+
+/* 
+Rewrite the 'calcAverageHumanAge' function from the previous challenge, but this time as an arrow function, and using chaining!
+
+TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
+
+GOOD LUCK 😀
+*/
+
+//Solution
+// const calcAverageHumanAge = ages =>
+//   ages
+//     .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
+//     .filter(dog => dog >= 18)
+//     .reduce((acc, curr, i, arr) => acc + curr / arr.length, 0);
+
+// console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+//Find Method
+console.log(accounts);
+const account = accounts.find(acc => acc.owner === 'Sarah Smith');
+console.log(account);
+/////////////////////////////////////////////////////////////////////////////////////////////
