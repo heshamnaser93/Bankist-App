@@ -242,6 +242,16 @@ btnLogin.addEventListener('click', e => {
     acc => acc.userName === inputLoginUsername.value
   );
   console.log(currentAccount);
+
+  if (Number(inputLoginPin.value) === currentAccount?.pin)
+    console.log('logged');
+  //Display UI and welcome message
+
+  //Display Movements
+
+  //Display Balance
+
+  //Display Summary
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
