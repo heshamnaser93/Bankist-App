@@ -246,6 +246,7 @@ btnLogin.addEventListener('click', e => {
   if (Number(inputLoginPin.value) === currentAccount?.pin)
     console.log('logged');
   //Display UI and welcome message
+  labelWelcome.textContent = `Hello ${currentAccount.owner}`;
 
   //Display Movements
 
