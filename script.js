@@ -167,8 +167,8 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // });
 ////////////////////////////////////////////////////////////////////////////////
 
-//////Bankist App/////////////////////////////////////////////////////////////////////////////////
-
+//////Start Bankist App/////////////////////////////////////////////////////////////////////////////////
+// Display Movements Function
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
   movements.forEach(function (movement, index) {
@@ -184,43 +184,38 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('beforeend', html);
   });
 };
+////////////////////////////////
 
-displayMovements(account1.movements);
-// //////////////////////////////////
-
-// /////////////////////////////////
-const calcDisplayMovements = function (movements) {
+//Display Balance Function
+const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => cur + acc);
   labelBalance.textContent = `${balance}€`;
 };
+///////////////////////////////
 
-calcDisplayMovements(account1.movements);
-///////////////////////////////////////
-
-///////////////////////////////////////
-const calcDisplaySummary = movements => {
-  const incomes = movements
+//Display Summary Function
+const calcDisplaySummary = acc => {
+  const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, curr) => acc + curr, 0);
   labelSumIn.textContent = `${incomes}€`;
 
-  const outcomes = movements
+  const outcomes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, curr) => acc + curr, 0);
   labelSumOut.textContent = `${Math.abs(outcomes)}€`;
 
-  const interest = movements
+  const interest = acc.movements
     .filter(mov => mov > 0)
-    .map(dep => (dep * 1.2) / 100)
+    .map(dep => (dep * acc.interestRate) / 100)
     .filter(int => int >= 1)
     .reduce((acc, inc) => acc + inc, 0);
 
   labelSumInterest.textContent = `${interest}€`;
 };
-calcDisplaySummary(account1.movements);
-//////////////////////////////////////////
+///////////////////////////////
 
-/////////////////////////////////////////
+//Create UseNames Function
 const createUserNames = function (accs) {
   accs.forEach(acc => {
     acc.userName = acc.owner
@@ -232,10 +227,10 @@ const createUserNames = function (accs) {
 };
 
 createUserNames(accounts);
-console.log(accounts);
-///////////////////////////////////////////
+///////////////////////////////
+
 let currentAccount;
-//////////////////////////////////////////
+//Login////////////////////////
 btnLogin.addEventListener('click', e => {
   e.preventDefault();
   currentAccount = accounts.find(
@@ -243,18 +238,33 @@ btnLogin.addEventListener('click', e => {
   );
   console.log(currentAccount);
 
-  if (Number(inputLoginPin.value) === currentAccount?.pin)
-    console.log('logged');
-  //Display UI and welcome message
-  labelWelcome.textContent = `Hello ${currentAccount.owner}`;
+  if (Number(inputLoginPin.value) === currentAccount?.pin) {
+    console.log('logged In');
+    //Display UI and welcome message
+    labelWelcome.textContent = `Hello ${currentAccount.owner.split(' ')[0]}`;
+  }
+
+  //Show Homepage
+  containerApp.style.opacity = 100;
+
+  //Clear Input Fields
+  inputLoginUsername.value = inputLoginPin.value = '';
+  inputLoginPin.blur();
 
   //Display Movements
+  displayMovements(currentAccount.movements);
 
   //Display Balance
+  calcDisplayBalance(currentAccount.movements);
 
   //Display Summary
+  calcDisplaySummary(currentAccount);
 });
-////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Transfer Operatıon
+
+//////////////////////////////
+//////End Bankist App/////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // //Maximum Value
