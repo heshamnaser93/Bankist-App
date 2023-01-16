@@ -181,14 +181,16 @@ const displayMovements = function (movements) {
       <div class="movements__value">${movement}</div>
     </div>`;
     //containerMovements.innerHTML += html;
-    containerMovements.insertAdjacentHTML('beforeend', html);
+    containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 ////////////////////////////////
 
 //Display Balance Function
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, cur) => cur + acc);
+const calcDisplayBalance = function (acc) {
+  const balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  //Store balance to account
+  acc.balance = balance;
   labelBalance.textContent = `${balance}€`;
 };
 ///////////////////////////////
@@ -229,6 +231,18 @@ const createUserNames = function (accs) {
 createUserNames(accounts);
 ///////////////////////////////
 
+//updateUI Function
+const updateUI = function (acc) {
+  //Display Movements
+  displayMovements(acc.movements);
+
+  //Display Balance
+  calcDisplayBalance(acc);
+
+  //Display Summary
+  calcDisplaySummary(acc);
+};
+
 let currentAccount;
 //Login////////////////////////
 btnLogin.addEventListener('click', e => {
@@ -251,18 +265,33 @@ btnLogin.addEventListener('click', e => {
   inputLoginUsername.value = inputLoginPin.value = '';
   inputLoginPin.blur();
 
-  //Display Movements
-  displayMovements(currentAccount.movements);
-
-  //Display Balance
-  calcDisplayBalance(currentAccount.movements);
-
-  //Display Summary
-  calcDisplaySummary(currentAccount);
+  updateUI(currentAccount);
 });
 
 //Transfer Operatıon
+btnTransfer.addEventListener('click', e => {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.userName === inputTransferTo.value
+  );
+  console.log(amount, receiverAcc);
 
+  if (
+    receiverAcc &&
+    amount > 0 &&
+    currentAccount.balance >= amount &&
+    receiverAcc.userName !== currentAccount.userName
+  ) {
+    console.log('transfer valid');
+
+    //Doing The Transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+    inputTransferAmount.value = inputTransferTo.value = '';
+    updateUI(currentAccount);
+  }
+});
 //////////////////////////////
 //////End Bankist App/////////////////////////////////////////////////////////////////////////////////
 
