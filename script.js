@@ -1,10 +1,10 @@
 'use strict';
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
 // BANKIST APP
 
-// Data
+////Data///////////////////////////
 const account1 = {
   owner: 'Jonas Schmedtmann',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
@@ -35,7 +35,7 @@ const account4 = {
 
 const accounts = [account1, account2, account3, account4];
 
-// Elements
+////Elements/////////////////////////
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
@@ -61,10 +61,9 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-/////////////////////////////////////////////////
+////////////////////////////////////////
 
-/////////////////////////////////////////////////
-// LECTURES
+////LECTURES////////////////////////////
 
 // const currencies = new Map([
 //   ['USD', 'United States dollar'],
@@ -73,9 +72,9 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // ]);
 
 //const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+////////////////////////////////////////
 
-/////////////////////////////////////////////////
-
+////////////////////////////////////////
 // let arr = ['a', 'b', 'c', 'd', 'e'];
 // console.log(arr.slice(2));
 // console.log(arr.slice(2, 3));
@@ -98,7 +97,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // console.log(allLetters);
 // console.log(allLetters.join('/'));
 
-// The New 'at' method
+/////The New 'at' method//////////////
 // const arr = [23, 24, 25];
 // console.log(arr[0]);
 // console.log(arr.at(2));
@@ -117,11 +116,9 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // const string = 'Hesham';
 // console.log(string.at(0));
 // console.log(string.at(-1));
+/////////////////////////////////////
 
-//
-//
-//
-//
+/////////////////////////////////////
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // for (const [i, movement] of movements.entries()) {
@@ -133,8 +130,9 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // }
 
 // console.log(`//`);
+///////////////////////////////////////
 
-// // Using foreach
+/////Using foreach////////////////////
 // movements.forEach(function (movement, i, arr) {
 //   if (movement > 0) {
 //     console.log(` Movement ${i + 1} you deposited ${movement}`);
@@ -143,10 +141,6 @@ const inputClosePin = document.querySelector('.form__input--pin');
 //   }
 // });
 
-//
-//
-//
-//
 // Using forEach with 'Map' and 'sets'
 // const currencies = new Map([
 //   ['USD', 'United States dollar'],
@@ -165,9 +159,65 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // currencies.forEach(function (value, _, set) {
 //   console.log(` ${value} from ${set}`);
 // });
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////
 
-//////Start Bankist App/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////
+// //Maximum Value
+// const movements = account1.movements;
+// const max = movements.reduce((acc, cur) => {
+//   if (acc > cur) return acc;
+//   else return cur;
+// }, movements[0]);
+
+// console.log(max);
+//////////////////////////////////////
+
+/////Some And Every///////////////////
+//Some
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// console.log(movements);
+// console.log(movements.includes(-130));
+
+// const anyDeposits = movements.some(mov => mov > 0);
+// console.log(anyDeposits);
+//Every
+//console.log(account4.movements.every(mov => mov > 0));
+//////////////////////////////////////
+
+////Flat And FlatMap/////////////////
+//Flat//
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const deepArr = [[1, 2, [3, 4]], 5, 6, [7, [8, 9]]];
+console.log(deepArr.flat());
+console.log(deepArr.flat(2));
+
+// const accountMovements = accounts.map(acc => acc.movements);
+// console.log(accountMovements);
+// const allMovements = accountMovements.flat();
+// console.log(allMovements);
+
+// const overallBalances = allMovements.reduce((acc, mov) => Number(acc + mov), 0);
+// console.log(overallBalances);
+
+//Using Chaining
+const overallBalances = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => Number(acc + mov), 0);
+console.log(overallBalances);
+
+//FlatMap
+const overallBalances2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => Number(acc + mov), 0);
+console.log(overallBalances2);
+/////////////////////////////////////
+
+////End Lectures/////////////////////
+
+//////Start Bankist App//////////////////////////////////////////////////////////////
 // Display Movements Function
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
@@ -247,6 +297,7 @@ let currentAccount;
 //Login////////////////////////
 btnLogin.addEventListener('click', e => {
   e.preventDefault();
+
   currentAccount = accounts.find(
     acc => acc.userName === inputLoginUsername.value
   );
@@ -256,19 +307,20 @@ btnLogin.addEventListener('click', e => {
     console.log('logged In');
     //Display UI and welcome message
     labelWelcome.textContent = `Hello ${currentAccount.owner.split(' ')[0]}`;
+
+    //Show Homepage
+    containerApp.style.opacity = 100;
+
+    //Clear Input Fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    updateUI(currentAccount);
   }
-
-  //Show Homepage
-  containerApp.style.opacity = 100;
-
-  //Clear Input Fields
-  inputLoginUsername.value = inputLoginPin.value = '';
-  inputLoginPin.blur();
-
-  updateUI(currentAccount);
 });
+///////////////////////////
 
-//Transfer Operatıon
+//Transfer Operatıon//////
 btnTransfer.addEventListener('click', e => {
   e.preventDefault();
   const amount = Number(inputTransferAmount.value);
@@ -293,18 +345,50 @@ btnTransfer.addEventListener('click', e => {
   }
 });
 //////////////////////////////
-//////End Bankist App/////////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-// //Maximum Value
-// const movements = account1.movements;
-// const max = movements.reduce((acc, cur) => {
-//   if (acc > cur) return acc;
-//   else return cur;
-// }, movements[0]);
+////Requesting Loan//////////
+btnLoan.addEventListener('click', e => {
+  e.preventDefault();
+  const loanAmount = Number(inputLoanAmount.value);
+  const checkDeps = currentAccount.movements.some(
+    mov => mov >= loanAmount * 0.1
+  );
 
-// console.log(max);
-/////////////////////////////////////////////////////////////////////////////////////////////////
+  // Add Movement
+  if (checkDeps && loanAmount > 0) currentAccount.movements.push(loanAmount);
+  // Update UI
+  updateUI(currentAccount);
+  inputLoanAmount.value = '';
+});
+/////////////////////////////
+
+/////Closing Account//////////
+btnClose.addEventListener('click', e => {
+  e.preventDefault();
+  if (
+    inputCloseUsername.value === currentAccount.userName &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.userName === currentAccount.userName
+    );
+
+    //Delete Accounts
+    accounts.splice(index, 1);
+
+    //clear Input Fields
+    inputCloseUsername.value = inputClosePin.value = '';
+
+    //Hide UI
+    containerApp.style.opacity = 0;
+  }
+});
+//////////////////////////////
+//////End Bankist App//////////////////////////////////////////////////////////////////////
+
+//
+//
+//
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // Coding Challenge #1
