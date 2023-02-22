@@ -186,12 +186,12 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 ////Flat And FlatMap/////////////////
 //Flat//
-const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
-console.log(arr.flat());
+// const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+// console.log(arr.flat());
 
-const deepArr = [[1, 2, [3, 4]], 5, 6, [7, [8, 9]]];
-console.log(deepArr.flat());
-console.log(deepArr.flat(2));
+// const deepArr = [[1, 2, [3, 4]], 5, 6, [7, [8, 9]]];
+// console.log(deepArr.flat());
+// console.log(deepArr.flat(2));
 
 // const accountMovements = accounts.map(acc => acc.movements);
 // console.log(accountMovements);
@@ -202,17 +202,50 @@ console.log(deepArr.flat(2));
 // console.log(overallBalances);
 
 //Using Chaining
-const overallBalances = accounts
-  .map(acc => acc.movements)
-  .flat()
-  .reduce((acc, mov) => Number(acc + mov), 0);
-console.log(overallBalances);
+// const overallBalances = accounts
+//   .map(acc => acc.movements)
+//   .flat()
+//   .reduce((acc, mov) => Number(acc + mov), 0);
+// console.log(overallBalances);
 
-//FlatMap
-const overallBalances2 = accounts
-  .flatMap(acc => acc.movements)
-  .reduce((acc, mov) => Number(acc + mov), 0);
-console.log(overallBalances2);
+// //FlatMap
+// const overallBalances2 = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce((acc, mov) => Number(acc + mov), 0);
+// console.log(overallBalances2);
+/////////////////////////////////////
+
+//Sorting Arrays/////////////////////
+//strings
+const owners = ['ahmed', 'mohamed', 'mahmoud', 'ibrahim'];
+owners.sort();
+console.log(owners);
+
+//numbers
+//return < 0, A,B (keep order)
+//return > 0, B,A (switch order)
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log(movements);
+
+//Ascending
+// movements.sort((a, b) => {
+//   if (a > b) return 1;
+//   if (a < b) return -1;
+// });
+
+//Another Way for Ascending
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+//Descending
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+//   if (a < b) return 1;
+// });
+
+//Another Way for Descending
+movements.sort((a, b) => b - a);
+console.log(movements);
 /////////////////////////////////////
 
 ////End Lectures/////////////////////
