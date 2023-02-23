@@ -246,15 +246,21 @@ console.log(movements);
 //Another Way for Descending
 movements.sort((a, b) => b - a);
 console.log(movements);
-/////////////////////////////////////
 
+//BRIEF FOR ME
+// IN ASCENDİNG SORTING => IF A > B RETURN +(0 IS NOT POSITIVE) AND SWITCH BUT IF A < B RETURN - AND KEEP THE ORDER
+// IN DESCENDING SORTING => IF A > B RETURN - AND KEEP THE ORDER BUT IF A < B RETURN +(0 IS NOT POSITIVE) AND SWITCH
+/////////////////////////////////////
 ////End Lectures/////////////////////
 
 //////Start Bankist App//////////////////////////////////////////////////////////////
 // Display Movements Function
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
-  movements.forEach(function (movement, index) {
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (movement, index) {
     const type = movement > 0 ? 'deposit' : 'withdrawal';
     const html = `
     <div class="movements__row">
@@ -415,6 +421,17 @@ btnClose.addEventListener('click', e => {
     //Hide UI
     containerApp.style.opacity = 0;
   }
+});
+
+//clicking on sort button//////
+let sorted = false;
+btnSort.addEventListener('click', e => {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+  sorted
+    ? (btnSort.textContent = 'UNSORT')
+    : (btnSort.innerHTML = '&downarrow; SORT');
 });
 //////////////////////////////
 //////End Bankist App//////////////////////////////////////////////////////////////////////
