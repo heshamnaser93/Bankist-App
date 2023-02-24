@@ -217,15 +217,15 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 //Sorting Arrays/////////////////////
 //strings
-const owners = ['ahmed', 'mohamed', 'mahmoud', 'ibrahim'];
-owners.sort();
-console.log(owners);
+// const owners = ['ahmed', 'mohamed', 'mahmoud', 'ibrahim'];
+// owners.sort();
+// console.log(owners);
 
 //numbers
 //return < 0, A,B (keep order)
 //return > 0, B,A (switch order)
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-console.log(movements);
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// console.log(movements);
 
 //Ascending
 // movements.sort((a, b) => {
@@ -234,8 +234,8 @@ console.log(movements);
 // });
 
 //Another Way for Ascending
-movements.sort((a, b) => a - b);
-console.log(movements);
+// movements.sort((a, b) => a - b);
+// console.log(movements);
 
 //Descending
 // movements.sort((a, b) => {
@@ -244,12 +244,23 @@ console.log(movements);
 // });
 
 //Another Way for Descending
-movements.sort((a, b) => b - a);
-console.log(movements);
+// movements.sort((a, b) => b - a);
+// console.log(movements);
 
 //BRIEF FOR ME
 // IN ASCENDİNG SORTING => IF A > B RETURN +(0 IS NOT POSITIVE) AND SWITCH BUT IF A < B RETURN - AND KEEP THE ORDER
 // IN DESCENDING SORTING => IF A > B RETURN - AND KEEP THE ORDER BUT IF A < B RETURN +(0 IS NOT POSITIVE) AND SWITCH
+/////////////////////////////////////
+
+////More ways of creatıng and fıllıng array/////
+console.log(new Array(1, 2, 3, 4, 5, 6));
+
+const x = new Array(7);
+console.log(x);
+
+x.fill(1);
+console.log(x);
+
 /////////////////////////////////////
 ////End Lectures/////////////////////
 
@@ -430,7 +441,7 @@ btnSort.addEventListener('click', e => {
   displayMovements(currentAccount.movements, !sorted);
   sorted = !sorted;
   sorted
-    ? (btnSort.textContent = 'UNSORT')
+    ? (btnSort.innerHTML = 'UNSORT')
     : (btnSort.innerHTML = '&downarrow; SORT');
 });
 //////////////////////////////
