@@ -261,6 +261,35 @@ console.log(x);
 x.fill(1);
 console.log(x);
 
+//Array.from
+
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+
+const a = Array.from({ length: 100 }, num => {
+  num = Math.random() * 100;
+  const last = Math.round(num);
+  return last;
+});
+console.log(a);
+
+const movementsUI = Array.from(document.querySelectorAll('.movements__value'));
+console.log(movementsUI);
+
+labelBalance.addEventListener('click', () => {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => el.textContent.concat('✔')
+  );
+  console.log(movementsUI);
+});
+
+//Another way to creating an array by 'spreading'
+const movementUI2 = [...document.querySelectorAll('.movements__value')];
+console.log(movementUI2);
 /////////////////////////////////////
 ////End Lectures/////////////////////
 
