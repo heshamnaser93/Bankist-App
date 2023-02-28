@@ -253,44 +253,79 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////
 
 ////More ways of creatıng and fıllıng array/////
-console.log(new Array(1, 2, 3, 4, 5, 6));
+// console.log(new Array(1, 2, 3, 4, 5, 6));
 
-const x = new Array(7);
-console.log(x);
+// const x = new Array(7);
+// console.log(x);
 
-x.fill(1);
-console.log(x);
+// x.fill(1);
+// console.log(x);
 
 //Array.from
 
-const y = Array.from({ length: 7 }, () => 1);
-console.log(y);
+// const y = Array.from({ length: 7 }, () => 1);
+// console.log(y);
 
-const z = Array.from({ length: 7 }, (_, i) => i + 1);
-console.log(z);
+// const z = Array.from({ length: 7 }, (_, i) => i + 1);
+// console.log(z);
 
-const a = Array.from({ length: 100 }, num => {
-  num = Math.random() * 100;
-  const last = Math.round(num);
-  return last;
-});
-console.log(a);
+// const a = Array.from({ length: 100 }, num => {
+//   num = Math.random() * 100;
+//   const last = Math.round(num);
+//   return last;
+// });
+// console.log(a);
 
-const movementsUI = Array.from(document.querySelectorAll('.movements__value'));
-console.log(movementsUI);
+// const movementsUI = Array.from(document.querySelectorAll('.movements__value'));
+// console.log(movementsUI);
 
-labelBalance.addEventListener('click', () => {
-  const movementsUI = Array.from(
-    document.querySelectorAll('.movements__value'),
-    el => el.textContent.concat('✔')
-  );
-  console.log(movementsUI);
-});
+// labelBalance.addEventListener('click', () => {
+//   const movementsUI = Array.from(
+//     document.querySelectorAll('.movements__value'),
+//     el => el.textContent.concat('✔')
+//   );
+//   console.log(movementsUI);
+// });
 
 //Another way to creating an array by 'spreading'
-const movementUI2 = [...document.querySelectorAll('.movements__value')];
-console.log(movementUI2);
+// const movementUI2 = [...document.querySelectorAll('.movements__value')];
+// console.log(movementUI2);
 /////////////////////////////////////
+
+///Some Practise/////////////////////
+//.1 calculate sum of deposits
+// const bankDepositSum = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov > 0)
+//   .reduce((cur, mov) => cur + mov, 0);
+// console.log(bankDepositSum);
+
+//2. numbers of deposits >= 1000
+// const bigDeps = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov >= 1000).length;
+// console.log(bigDeps);
+
+//another way
+// const bigDeps = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce((count, el) => (el >= 1000 ? ++count : count), 0);
+// console.log(bigDeps);
+
+//3. calculate sum of deposits and withdrawals in one object
+const obj = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sum, cur) => {
+      //cur > 0 ? (sum.deposits += cur) : (sum.withdrawals += cur);
+      sum[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+      return sum;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+console.log(obj);
+
+////////////////////////////////////
 ////End Lectures/////////////////////
 
 //////Start Bankist App//////////////////////////////////////////////////////////////
