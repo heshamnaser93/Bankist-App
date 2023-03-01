@@ -313,18 +313,41 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // console.log(bigDeps);
 
 //3. calculate sum of deposits and withdrawals in one object
-const obj = accounts
-  .flatMap(acc => acc.movements)
-  .reduce(
-    (sum, cur) => {
-      //cur > 0 ? (sum.deposits += cur) : (sum.withdrawals += cur);
-      sum[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
-      return sum;
-    },
-    { deposits: 0, withdrawals: 0 }
-  );
-console.log(obj);
+// const obj = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce(
+//     (sum, cur) => {
+//       //cur > 0 ? (sum.deposits += cur) : (sum.withdrawals += cur);
+//       sum[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+//       return sum;
+//     },
+//     { deposits: 0, withdrawals: 0 }
+//   );
+// console.log(obj);
 
+//4. convert to title case
+const toTilteCase = title => {
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+  const exceptions = [
+    'a',
+    'an',
+    'but',
+    'or',
+    'with',
+    'the',
+    'in',
+    'on',
+    'of',
+    'and',
+  ];
+  const newTitle = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => (exceptions.includes(word) ? word : capitalize(word)))
+    .join(' ');
+  return newTitle;
+};
+console.log(toTilteCase('this is A title'));
 ////////////////////////////////////
 ////End Lectures/////////////////////
 
