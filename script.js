@@ -791,3 +791,47 @@ console.log(
 );
 
 //3.
+const ownersEatTooMuch = dogs
+  .filter(dog => dog.curFood > dog.recommendedFood)
+  .flatMap(dog => dog.owners);
+
+console.log(ownersEatTooMuch);
+
+const ownersEatTooLittle = dogs
+  .filter(dog => dog.curFood < dog.recommendedFood)
+  .flatMap(dog => dog.owners);
+
+console.log(ownersEatTooLittle);
+
+//4.
+//"Matilda and Alice and Bob's dogs eat too much!" and "Sarah and John and Michael's dogs eat too little!"
+//['Matilda', 'Sarah', 'John']
+//['Alice', 'Bob', 'Michael']
+
+console.log(
+  `"${ownersEatTooMuch.join(
+    ' and '
+  )}'s dogs eat too much" and "${ownersEatTooLittle.join(
+    ' and '
+  )}'s dogs eat too little"`
+);
+
+//5.
+console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
+
+//6.
+const eatingOkay = dog =>
+  dog.curFood > dog.recommendedFood * 0.9 &&
+  dog.curFood < dog.recommendedFood * 1.1;
+
+console.log(dogs.some(eatingOkay));
+
+//7.
+const eatingOkayDogs = dogs.filter(eatingOkay);
+console.log(eatingOkayDogs);
+
+//8.
+const sortedDogs = dogs
+  .slice()
+  .sort((a, b) => a.recommendedFood - b.recommendedFood);
+console.log(sortedDogs);
