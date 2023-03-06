@@ -7,9 +7,22 @@
 ////Data///////////////////////////
 const account1 = {
   owner: 'Jonas Schmedtmann',
-  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+
+  movementsDates: [
+    '2019-11-18T21:31:17.178Z',
+    '2019-12-23T07:42:02.383Z',
+    '2020-01-28T09:15:04.904Z',
+    '2020-04-01T10:17:24.185Z',
+    '2020-05-08T14:11:59.604Z',
+    '2020-05-27T17:01:17.194Z',
+    '2020-07-11T23:36:17.929Z',
+    '2020-07-12T10:51:36.790Z',
+  ],
+  currency: 'EUR',
+  locale: 'pt-PT', // de-DE
 };
 
 const account2 = {
@@ -17,23 +30,22 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
+
+  movementsDates: [
+    '2019-11-01T13:15:33.035Z',
+    '2019-11-30T09:48:16.867Z',
+    '2019-12-25T06:04:23.907Z',
+    '2020-01-25T14:18:46.235Z',
+    '2020-02-05T16:33:06.386Z',
+    '2020-04-10T14:43:26.374Z',
+    '2020-06-25T18:49:59.371Z',
+    '2020-07-26T12:01:20.894Z',
+  ],
+  currency: 'USD',
+  locale: 'en-US',
 };
 
-const account3 = {
-  owner: 'Steven Thomas Williams',
-  movements: [200, -200, 340, -300, -20, 50, 400, -460],
-  interestRate: 0.7,
-  pin: 3333,
-};
-
-const account4 = {
-  owner: 'Sarah Smith',
-  movements: [430, 1000, 700, 50, 90],
-  interestRate: 1,
-  pin: 4444,
-};
-
-const accounts = [account1, account2, account3, account4];
+const accounts = [account1, account2];
 
 ////Elements/////////////////////////
 const labelWelcome = document.querySelector('.welcome');
@@ -349,6 +361,43 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // };
 // console.log(toTilteCase('and this is A title and subtitle'));
 ////////////////////////////////////
+
+///Numbers Section/////////////////
+// console.log(23);
+// console.log(Number('23'));
+// console.log(+'23'); //this + symbol converts it to a number
+// console.log(Number.parseInt('93.5hesham')); //output = 93
+
+// //if i want to take a number out of the string
+// console.log(Number.parseFloat('2px')); //output = 2.5
+
+// //Check if value is not a number
+// console.log(Number.isNaN(20)); //false
+// console.log(Number.isNaN('20')); //false
+// console.log(Number.isNaN(+'20x')); //true
+// console.log(Number.isNaN(23 / 0)); //false
+
+// //Check if value is a number
+// console.log(Number.isFinite(20)); //true
+// console.log(Number.isFinite('20')); //false
+// console.log(Number.isFinite(+'20x')); //false
+// console.log(Number.isFinite(23 / 0)); //false
+
+// //Check if value is integer number
+// console.log(Number.isInteger(23)); //true
+// console.log(Number.isInteger(23.0)); //true
+// console.log(Number.isInteger(23.5)); //false
+// console.log(Number.isInteger(23 / 0)); //false
+
+// Math Operations
+console.log(Math.sqrt(25));
+console.log(25 ** (1 / 2));
+console.log(Math.max(5, 8, 7, 2, 44, 65));
+console.log(Math.max(5, 8, 7, 2, 44, '65'));
+console.log(Math.min(5, 8, 7, 2, 44, 65));
+console.log(Math.PI * Number.parseFloat('10px') ** 2);
+console.log(Math.trunc(Math.random() * 10) + 1);
+///////////////////////////////////
 ////End Lectures/////////////////////
 
 //////Start Bankist App//////////////////////////////////////////////////////////////
@@ -440,7 +489,7 @@ btnLogin.addEventListener('click', e => {
   );
   console.log(currentAccount);
 
-  if (Number(inputLoginPin.value) === currentAccount?.pin) {
+  if (+inputLoginPin.value === currentAccount?.pin) {
     console.log('logged In');
     //Display UI and welcome message
     labelWelcome.textContent = `Hello ${currentAccount.owner.split(' ')[0]}`;
@@ -460,7 +509,7 @@ btnLogin.addEventListener('click', e => {
 //Transfer Operatıon//////
 btnTransfer.addEventListener('click', e => {
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
+  const amount = +inputTransferAmount.value;
   const receiverAcc = accounts.find(
     acc => acc.userName === inputTransferTo.value
   );
@@ -486,7 +535,7 @@ btnTransfer.addEventListener('click', e => {
 ////Requesting Loan//////////
 btnLoan.addEventListener('click', e => {
   e.preventDefault();
-  const loanAmount = Number(inputLoanAmount.value);
+  const loanAmount = +inputLoanAmount.value;
   const checkDeps = currentAccount.movements.some(
     mov => mov >= loanAmount * 0.1
   );
@@ -504,7 +553,7 @@ btnClose.addEventListener('click', e => {
   e.preventDefault();
   if (
     inputCloseUsername.value === currentAccount.userName &&
-    Number(inputClosePin.value) === currentAccount.pin
+    +inputClosePin.value === currentAccount.pin
   ) {
     const index = accounts.findIndex(
       acc => acc.userName === currentAccount.userName
@@ -767,71 +816,71 @@ GOOD LUCK 😀
 
 //Solution
 
-//1.
-const dogs = [
-  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
-  { weight: 8, curFood: 200, owners: ['Matilda'] },
-  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
-  { weight: 32, curFood: 340, owners: ['Michael'] },
-];
+// //1.
+// const dogs = [
+//   { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+//   { weight: 8, curFood: 200, owners: ['Matilda'] },
+//   { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+//   { weight: 32, curFood: 340, owners: ['Michael'] },
+// ];
 
-dogs.forEach(dog => {
-  dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28);
-});
+// dogs.forEach(dog => {
+//   dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28);
+// });
 
-console.log(dogs);
+// console.log(dogs);
 
-//2.
-const dogOfSara = dogs.find(dog => dog.owners.includes('Sarah'));
-console.log(dogOfSara);
-console.log(
-  `Sarah's Do Is Eating Too ${
-    dogOfSara.curFood > dogOfSara.recommendedFood ? 'Much' : 'Little'
-  }`
-);
+// //2.
+// const dogOfSara = dogs.find(dog => dog.owners.includes('Sarah'));
+// console.log(dogOfSara);
+// console.log(
+//   `Sarah's Do Is Eating Too ${
+//     dogOfSara.curFood > dogOfSara.recommendedFood ? 'Much' : 'Little'
+//   }`
+// );
 
-//3.
-const ownersEatTooMuch = dogs
-  .filter(dog => dog.curFood > dog.recommendedFood)
-  .flatMap(dog => dog.owners);
+// //3.
+// const ownersEatTooMuch = dogs
+//   .filter(dog => dog.curFood > dog.recommendedFood)
+//   .flatMap(dog => dog.owners);
 
-console.log(ownersEatTooMuch);
+// console.log(ownersEatTooMuch);
 
-const ownersEatTooLittle = dogs
-  .filter(dog => dog.curFood < dog.recommendedFood)
-  .flatMap(dog => dog.owners);
+// const ownersEatTooLittle = dogs
+//   .filter(dog => dog.curFood < dog.recommendedFood)
+//   .flatMap(dog => dog.owners);
 
-console.log(ownersEatTooLittle);
+// console.log(ownersEatTooLittle);
 
-//4.
-//"Matilda and Alice and Bob's dogs eat too much!" and "Sarah and John and Michael's dogs eat too little!"
-//['Matilda', 'Sarah', 'John']
-//['Alice', 'Bob', 'Michael']
+// //4.
+// //"Matilda and Alice and Bob's dogs eat too much!" and "Sarah and John and Michael's dogs eat too little!"
+// //['Matilda', 'Sarah', 'John']
+// //['Alice', 'Bob', 'Michael']
 
-console.log(
-  `"${ownersEatTooMuch.join(
-    ' and '
-  )}'s dogs eat too much" and "${ownersEatTooLittle.join(
-    ' and '
-  )}'s dogs eat too little"`
-);
+// console.log(
+//   `"${ownersEatTooMuch.join(
+//     ' and '
+//   )}'s dogs eat too much" and "${ownersEatTooLittle.join(
+//     ' and '
+//   )}'s dogs eat too little"`
+// );
 
-//5.
-console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
+// //5.
+// console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
 
-//6.
-const eatingOkay = dog =>
-  dog.curFood > dog.recommendedFood * 0.9 &&
-  dog.curFood < dog.recommendedFood * 1.1;
+// //6.
+// const eatingOkay = dog =>
+//   dog.curFood > dog.recommendedFood * 0.9 &&
+//   dog.curFood < dog.recommendedFood * 1.1;
 
-console.log(dogs.some(eatingOkay));
+// console.log(dogs.some(eatingOkay));
 
-//7.
-const eatingOkayDogs = dogs.filter(eatingOkay);
-console.log(eatingOkayDogs);
+// //7.
+// const eatingOkayDogs = dogs.filter(eatingOkay);
+// console.log(eatingOkayDogs);
 
-//8.
-const sortedDogs = dogs
-  .slice()
-  .sort((a, b) => a.recommendedFood - b.recommendedFood);
-console.log(sortedDogs);
+// //8.
+// const sortedDogs = dogs
+//   .slice()
+//   .sort((a, b) => a.recommendedFood - b.recommendedFood);
+// console.log(sortedDogs);
