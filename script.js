@@ -390,35 +390,56 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // console.log(Number.isInteger(23 / 0)); //false
 
 // Math Operations
-console.log(Math.sqrt(25));
-console.log(25 ** (1 / 2));
-console.log(Math.max(5, 8, 7, 2, 44, 65));
-console.log(Math.max(5, 8, 7, 2, 44, '65'));
-console.log(Math.min(5, 8, 7, 2, 44, 65));
-console.log(Math.PI * Number.parseFloat('10px') ** 2);
-console.log(Math.trunc(Math.random() * 6) + 1); //output will be random between 1 and 6
+// console.log(Math.sqrt(25));
+// console.log(25 ** (1 / 2));
+// console.log(Math.max(5, 8, 7, 2, 44, 65));
+// console.log(Math.max(5, 8, 7, 2, 44, '65'));
+// console.log(Math.min(5, 8, 7, 2, 44, 65));
+// console.log(Math.PI * Number.parseFloat('10px') ** 2);
+// console.log(Math.trunc(Math.random() * 6) + 1); //output will be random between 1 and 6
 
-const randomInt = (min, max) =>
-  Math.trunc(Math.random() * (max - min - 1) + (min + 1)); //(min-1) and (min+1) because i want the result in between them not from min to max
+// const randomInt = (min, max) =>
+//   Math.trunc(Math.random() * (max - min - 1) + (min + 1)); //(min-1) and (min+1) because i want the result in between them not from min to max
 
-console.log(randomInt(5, 7));
+// console.log(randomInt(5, 7));
 
-//Rounding Integers
-console.log(Math.trunc(23.3)); // 23
-console.log(Math.round(23.3)); // 23
-console.log(Math.round(23.9)); // 24
-console.log(Math.ceil(23.4)); // 24
-console.log(Math.floor(23.9)); // 23
-console.log(Math.floor('23.3')); // 23
-console.log(Math.trunc(-23.3)); // -23
-console.log(Math.floor(-23.3)); // -24
+// //Rounding Integers
+// console.log(Math.trunc(23.3)); // 23
+// console.log(Math.round(23.3)); // 23
+// console.log(Math.round(23.9)); // 24
+// console.log(Math.ceil(23.4)); // 24
+// console.log(Math.floor(23.9)); // 23
+// console.log(Math.floor('23.3')); // 23
+// console.log(Math.trunc(-23.3)); // -23
+// console.log(Math.floor(-23.3)); // -24
 
-//Rounding Decimals
-console.log((2.7).toFixed(0)); // 3 but string
-console.log((2.7).toFixed(3)); // 2.700 but string
-console.log((2.345).toFixed(2)); // 2.35 but string
-console.log(+(2.345).toFixed(2)); // 2.35 => here type is number
+// //Rounding Decimals
+// console.log((2.7).toFixed(0)); // 3 but string
+// console.log((2.7).toFixed(3)); // 2.700 but string
+// console.log((2.345).toFixed(2)); // 2.35 but string
+// console.log(+(2.345).toFixed(2)); // 2.35 => here type is number
 
+//REMAINDER
+// const isEven = n => n % 2 === 0;
+// console.log(isEven(10));
+// console.log(isEven(25));
+
+// labelBalance.addEventListener('click', () => {
+//   [...document.querySelectorAll('.movements__row')].forEach((row, i) => {
+//     if (i % 2 === 0) row.style.backgroundColor = '#ddd';
+//     else if (i % 3 === 0) row.style.backgroundColor = '#eee';
+//   });
+// });
+
+//NUMERIC SEPARATORS
+const bigNum = 777666000000;
+console.log(bigNum); // 777666000000
+
+const bigNum2 = 777_666_000_000;
+console.log(bigNum2);
+
+console.log(230_000); // 230000
+console.log(Number('230_000')); // NAN
 ///////////////////////////////////
 ////End Lectures/////////////////////
 
@@ -436,7 +457,7 @@ const displayMovements = function (movements, sort = false) {
       <div class="movements__type movements__type--${type}">${
       index + 1
     } ${type}</div>
-      <div class="movements__value">${movement}</div>
+      <div class="movements__value">${movement.toFixed(2)}</div>
     </div>`;
     //containerMovements.innerHTML += html;
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -449,7 +470,7 @@ const calcDisplayBalance = function (acc) {
   const balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
   //Store balance to account
   acc.balance = balance;
-  labelBalance.textContent = `${balance}€`;
+  labelBalance.textContent = `${balance.toFixed(2)}€`;
 };
 ///////////////////////////////
 
@@ -458,12 +479,12 @@ const calcDisplaySummary = acc => {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, curr) => acc + curr, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
 
   const outcomes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, curr) => acc + curr, 0);
-  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+  labelSumOut.textContent = `${Math.abs(outcomes.toFixed(2))}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -471,7 +492,7 @@ const calcDisplaySummary = acc => {
     .filter(int => int >= 1)
     .reduce((acc, inc) => acc + inc, 0);
 
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 ///////////////////////////////
 
@@ -557,7 +578,7 @@ btnTransfer.addEventListener('click', e => {
 ////Requesting Loan//////////
 btnLoan.addEventListener('click', e => {
   e.preventDefault();
-  const loanAmount = +inputLoanAmount.value;
+  const loanAmount = Math.floor(inputLoanAmount.value);
   const checkDeps = currentAccount.movements.some(
     mov => mov >= loanAmount * 0.1
   );
