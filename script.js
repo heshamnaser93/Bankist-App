@@ -432,14 +432,41 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // });
 
 //NUMERIC SEPARATORS
-const bigNum = 777666000000;
-console.log(bigNum); // 777666000000
+// const bigNum = 777666000000;
+// console.log(bigNum); // 777666000000
 
-const bigNum2 = 777_666_000_000;
-console.log(bigNum2);
+// const bigNum2 = 777_666_000_000;
+// console.log(bigNum2); // 777666000000
 
-console.log(230_000); // 230000
-console.log(Number('230_000')); // NAN
+// console.log(230_000); // 230000
+// console.log(Number('230_000')); // NAN
+
+//BigInt
+// console.log(2 ** 53 - 1);
+// console.log(Number.MAX_SAFE_INTEGER);
+// console.log(2 ** 53 + 4);
+// console.log(1325346687845312148674867854413164864n);
+// console.log(BigInt(1325346687845312148674867854413164864));
+// console.log(20n == 20);
+// console.log(10n / 3n); // 3n
+// console.log(10 / 3); // 3.333
+
+//DATES AND TIMES
+const date_now = new Date();
+console.log(date_now);
+
+console.log(new Date('15 mart'));
+const future = new Date(2023, 2, 17, 0, 0, 1);
+console.log(future);
+console.log(date_now.getFullYear());
+console.log(date_now.getMilliseconds());
+console.log(date_now.toISOString());
+console.log(date_now.getTime()); // the output here will be timestap
+console.log(new Date(1678976555431));
+console.log(Date.now()); //the output is timestamp
+future.setFullYear(2024); // changing the year in a date to any wanted year
+console.log(future);
+
 ///////////////////////////////////
 ////End Lectures/////////////////////
 
