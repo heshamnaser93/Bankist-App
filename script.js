@@ -467,6 +467,15 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // future.setFullYear(2024); // changing the year in a date to any wanted year
 // console.log(future);
 
+//operations with dates
+const future = new Date(2024, 0, 1, 13, 0);
+console.log(Number(future));
+
+const now = new Date();
+console.log(Number(now));
+
+const inBetween = future.getDay() - now.getDay();
+console.log(inBetween);
 ///////////////////////////////////
 ////End Lectures/////////////////////
 
@@ -507,7 +516,9 @@ const calcDisplayBalance = function (acc) {
   const balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
   //Store balance to account
   acc.balance = balance;
-  labelBalance.textContent = `${balance.toFixed(2)}€`;
+  labelBalance.textContent = `${balance
+    .toFixed(2)
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}€`;
 };
 ///////////////////////////////
 
@@ -516,12 +527,18 @@ const calcDisplaySummary = acc => {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, curr) => acc + curr, 0);
-  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+  labelSumIn.textContent = `${incomes
+    .toFixed(2)
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}€`;
 
   const outcomes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, curr) => acc + curr, 0);
-  labelSumOut.textContent = `${Math.abs(outcomes.toFixed(2))}€`;
+
+  labelSumOut.textContent = `${outcomes
+    .toFixed(2)
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    .substr(1)}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -529,7 +546,9 @@ const calcDisplaySummary = acc => {
     .filter(int => int >= 1)
     .reduce((acc, inc) => acc + inc, 0);
 
-  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
+  labelSumInterest.textContent = `${interest
+    .toFixed(2)
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}€`;
 };
 ///////////////////////////////
 
@@ -596,7 +615,7 @@ btnLogin.addEventListener('click', e => {
 });
 ///////////////////////////
 
-//Transfer Operatıon//////
+//Transfer Operation//////
 btnTransfer.addEventListener('click', e => {
   e.preventDefault();
   const amount = +inputTransferAmount.value;
