@@ -480,7 +480,24 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 // const days = calcPassedDays(new Date(2023, 4, 30), new Date(2023, 4, 22));
 // console.log(days);
+
+//setTime()
+// const ingredients = ['vg', 'cheese'];
+// const pizzaTime = setTimeout(
+//   (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}`),
+//   3000,
+//   ...ingredients
+// );
+// if (ingredients.includes('cheese')) clearTimeout(pizzaTime);
+
+//setInterval()
+// const logEverySecond = setInterval(() => {
+//   const now = new Intl.DateTimeFormat('en-gb').format(new Date());
+
+//   console.log(now);
+// }, 1000);
 ///////////////////////////////////
+
 ////End Lectures/////////////////////
 
 //////Start Bankist App//////////////////////////////////////////////////////////////
@@ -491,7 +508,7 @@ const formatMovementDate = (date, locale) => {
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
   const daysPassed = calcPassedDays(new Date(), date);
-  console.log(daysPassed);
+  //console.log(daysPassed);
 
   if (daysPassed === 0) return 'Today';
   if (daysPassed === 1) return 'Yesterday';
@@ -605,6 +622,27 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+//Set CountDown Timer///////////
+const startLogoutTimer = () => {
+  //set time to 5 minutes
+  let time = 10;
+  //Call the timer every second
+  const countDownTimer = setInterval(() => {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+    labelTimer.textContent = `${min}:${sec}`;
+    time--;
+    //when 0 seconds, stop timer and logout the user
+    if (time === 0) {
+      clearInterval(countDownTimer);
+      labelWelcome.textContent = `Log in to get started`;
+      containerApp.style.opacity = 0;
+    }
+  }, 1000);
+};
+
+///////////////////////////////
+
 let currentAccount;
 
 //Fake Always Logged ın
@@ -659,6 +697,9 @@ btnLogin.addEventListener('click', e => {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
+    //Call CountDown timer function
+    startLogoutTimer();
+
     updateUI(currentAccount);
   }
 });
@@ -707,11 +748,18 @@ btnLoan.addEventListener('click', e => {
 
   // Add Movement
   if (checkDeps && loanAmount > 0) {
-    currentAccount.movements.push(loanAmount);
-    currentAccount.movementsDates.push(new Date().toISOString());
+    setTimeout(() => {
+      //Add movement
+      currentAccount.movements.push(loanAmount);
+
+      //Add movement date
+      currentAccount.movementsDates.push(new Date().toISOString());
+
+      // Update UI
+      updateUI(currentAccount);
+    }, 2000);
   }
-  // Update UI
-  updateUI(currentAccount);
+
   inputLoanAmount.value = '';
 });
 /////////////////////////////
