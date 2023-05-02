@@ -625,25 +625,32 @@ const updateUI = function (acc) {
 //Set CountDown Timer///////////
 const startLogoutTimer = () => {
   //set time to 5 minutes
-  let time = 10;
-  //Call the timer every second
-  const countDownTimer = setInterval(() => {
+  let time = 300;
+
+  const startCount = () => {
     const min = String(Math.trunc(time / 60)).padStart(2, 0);
     const sec = String(time % 60).padStart(2, 0);
     labelTimer.textContent = `${min}:${sec}`;
-    time--;
+
     //when 0 seconds, stop timer and logout the user
     if (time === 0) {
-      clearInterval(countDownTimer);
+      clearInterval(timer);
       labelWelcome.textContent = `Log in to get started`;
       containerApp.style.opacity = 0;
     }
-  }, 1000);
+
+    //Decreaseing time
+    time--;
+  };
+
+  //Call the timer every second
+  startCount();
+  timer = setInterval(startCount, 1000);
 };
 
 ///////////////////////////////
 
-let currentAccount;
+let currentAccount, timer;
 
 //Fake Always Logged ın
 // currentAccount = account1;
@@ -697,7 +704,10 @@ btnLogin.addEventListener('click', e => {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
-    //Call CountDown timer function
+    //check if any timer running
+    if (timer) clearInterval(timer);
+
+    //Call timer function
     startLogoutTimer();
 
     updateUI(currentAccount);
@@ -734,6 +744,10 @@ btnTransfer.addEventListener('click', e => {
     updateUI(currentAccount);
     console.log(account1);
     console.log(account2);
+
+    //Resetting the timer
+    clearInterval(timer);
+    startLogoutTimer();
   }
 });
 //////////////////////////////
@@ -761,6 +775,10 @@ btnLoan.addEventListener('click', e => {
   }
 
   inputLoanAmount.value = '';
+
+  //Resetting the timer
+  clearInterval(timer);
+  startLogoutTimer();
 });
 /////////////////////////////
 
